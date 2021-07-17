@@ -57,6 +57,7 @@ class CovidSpider(scrapy.Spider):
             last_scrape = arrow.get(self.state.get('last_modified'))
             # nothing changed. skip
             if last_modified <= last_scrape:
+                self.log('No new venues. Finishing up', logging.WARNING)
                 return
 
         venues = response.json().get('data').get('monitor')
@@ -78,4 +79,4 @@ class CovidSpider(scrapy.Spider):
             venue_item.add_value('last_updated', venue.get('Last updated date'))
             yield venue_item.load_item()
 
-        self.log('Send {} venues to Twitter.'.format(len(venue_diff)), logging.INFO)
+        self.log('Send {} venues to Twitter.'.format(len(venue_diff)), logging.WARNING)
