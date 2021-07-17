@@ -56,7 +56,7 @@ class CovidSpider(scrapy.Spider):
         if self.state and self.state.get('last_modified'):
             last_scrape = arrow.get(self.state.get('last_modified'))
             # nothing changed. skip
-            if last_modified < last_scrape:
+            if last_modified <= last_scrape:
                 return
 
         venues = response.json().get('data').get('monitor')
