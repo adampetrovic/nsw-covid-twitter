@@ -70,9 +70,9 @@ TWITTER_AUTH = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'nswcovidbot.pipelines.TwitterPipeline': 0,
-#}
+ITEM_PIPELINES = {
+    'nswcovidbot.pipelines.TwitterPipeline': 0,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

@@ -1,7 +1,7 @@
 import arrow
 import scrapy
 import json
-import itertools
+import logging
 
 from scrapy import signals
 
@@ -78,3 +78,4 @@ class CovidSpider(scrapy.Spider):
             venue_item.add_value('last_updated', venue.get('Last updated date'))
             yield venue_item.load_item()
 
+        self.log('Send {} venues to Twitter.'.format(len(venue_diff)), logging.INFO)

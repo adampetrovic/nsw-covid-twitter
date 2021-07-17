@@ -6,7 +6,6 @@
 
 # useful for handling different item types with a single interface
 import tweepy
-from itemadapter import ItemAdapter
 
 
 class TwitterPipeline:
@@ -33,11 +32,11 @@ class TwitterPipeline:
 NEW EXPOSURE SITE IN NSW
 
 Venue: {venue}
+Address: {address}, {suburb}
 
 Date: {date} 
 Time: {time}
 
-Address: {address}, {suburb}
 {advice}
         """
         status = self.twitter.update_status(
