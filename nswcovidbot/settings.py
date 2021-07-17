@@ -6,6 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
 
 BOT_NAME = 'nswcovidbot'
 
@@ -18,6 +19,13 @@ NEWSPIDER_MODULE = 'nswcovidbot.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+TWITTER_AUTH = {
+    'consumer_key': os.environ.get('TWITTER_CONSUMER_KEY'),
+    'consumer_secret': os.environ.get('TWITTER_CONSUMER_SECRET'),
+    'access_token': os.environ.get('TWITTER_ACCESS_TOKEN'),
+    'access_token_secret': os.environ.get('TWITTER_ACCESS_TOKEN_SECRET'),
+}
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -63,7 +71,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'nswcovidbot.pipelines.NswcovidbotPipeline': 300,
+#    'nswcovidbot.pipelines.TwitterPipeline': 0,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
