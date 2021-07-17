@@ -52,17 +52,19 @@ class CovidSpider(scrapy.Spider):
 
     def parse(self, response):
         # Example: 'Last-Modified': [b'Fri, 16 Jul 2021 14:24:41 GMT']
+        venues = response.json().get('data').get('monitor')
         last_modified = arrow.get(str(response.headers.get('Last-Modified'), 'utf-8'), 'ddd, DD MMM YYYY HH:mm:ss ZZZ')
+        last_venues = self.state.get('last_response', [])
         if self.state and self.state.get('last_modified'):
             last_scrape = arrow.get(self.state.get('last_modified'))
             # nothing changed. skip
             if last_modified <= last_scrape:
-                self.log('No new venues. Finishing up', logging.WARNING)
+                self.log('No new venues ({} fetched, {} last response, last update {}). Finishing up'.format(
+                    len(venues), len(last_venues), last_modified.to('local').humanize()), logging.WARNING)
                 return
 
-        venues = response.json().get('data').get('monitor')
         # save last_modified state and response data
-        venue_diff = self.find_new_venues(venues, self.state.get('last_response', []))
+        venue_diff = self.find_new_venues(venues, last_venues)
         self.state['last_modified'] = str(last_modified)
         self.state['last_response'] = venues
 
