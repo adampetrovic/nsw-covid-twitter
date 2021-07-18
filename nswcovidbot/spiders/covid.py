@@ -16,12 +16,9 @@ class CovidSpider(scrapy.Spider):
     state = {}
 
     def __init__(self, state_path='state.json'):
-        try:
-            self.state_path = state_path
-            with open(state_path, 'rb') as f:
-                self.state = json.load(f)
-        except FileNotFoundError:
-            self.state = {}
+        self.state_path = state_path
+        with open(state_path, 'rb') as f:
+            self.state = json.load(f)
 
     '''
         find_new_venues takes a new_list of venues and compares it to a previously seen list, returning only those
