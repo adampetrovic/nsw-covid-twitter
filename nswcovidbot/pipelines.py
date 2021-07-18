@@ -24,7 +24,7 @@ class SQLPipeline(object):
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            db_uri=crawler.settings.get('POSTGRES_DB_URI')
+            db_uri=crawler.settings.get('DB_URI')
         )
 
     def open_spider(self, spider):
@@ -37,12 +37,7 @@ class SQLPipeline(object):
     def create_all(self):
         Base.metadata.create_all(bind=self.engine)
 
-    @staticmethod
-    def convert_date(date: str, format: str, tz='Australia/Sydney') -> datetime.date:
-        return arrow.get(date, format, tzinfo=tz).date()
-
     def process_item(self, item, spider):
-        # does it already exist?
         venue = self.session.query(Venue).filter_by(
             name=item.get('venue'),
             address=item.get('address'),
@@ -99,7 +94,7 @@ class TwitterPipeline:
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
-            db_uri=crawler.settings.get('POSTGRES_DB_URI'),
+            db_uri=crawler.settings.get('DB_URI'),
             creds=crawler.settings.get('TWITTER_AUTH'),
         )
 
@@ -129,15 +124,15 @@ class TwitterPipeline:
             return
 
         logging.warning('{} new venues found. tweeting.'.format(len(venues)))
-        aggr_body = AGGREGATE_TEMPLATE.render(suburbs=suburbs, venue_count=len(venues))
 
+        # does a group by venue name, so we can collate it into a single tweet
+        venue_group = [list(g) for k, g in groupby(venues, attrgetter('name', 'suburb'))]
+        aggr_body = AGGREGATE_TEMPLATE.render(suburbs=suburbs, venue_count=len(venue_group))
         # aggregate tweet
         aggr_tweet = self.twitter.update_status(
             status=aggr_body,
         )
 
-        # does a group by venue name, so we can collate it into a single tweet
-        venue_group = [list(g) for k, g in groupby(venues, attrgetter('name', 'suburb'))]
         for group in venue_group:
             dates = [(x.date, x.time) for x in group]
             venue_body = CASE_TEMPLATE.render(venue=group[0], dates=dates).strip()

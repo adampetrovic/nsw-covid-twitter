@@ -7,9 +7,7 @@ SPIDER_MODULES = ['nswcovidbot.spiders']
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'nswcovidbot (+http://twitter.com/nswcovidbot)'
 
-ROBOTSTXT_OBEY = True
-
-POSTGRES_DB_URI = os.environ.get('POSTGRES_URI')
+DB_URI = os.environ.get('DB_URI')
 
 TWITTER_AUTH = {
     'consumer_key': os.environ.get('TWITTER_CONSUMER_KEY'),

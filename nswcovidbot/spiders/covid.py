@@ -17,15 +17,6 @@ class CovidSpider(scrapy.Spider):
 
     def parse(self, response):
         venues = response.json().get('data').get('monitor')
-        '''
-        last_modified = arrow.get(str(response.headers.get('Last-Modified'), 'utf-8'), 'ddd, DD MMM YYYY HH:mm:ss ZZZ')
-        if last_modified:
-            last_scrape = arrow.get(self.state.get('last_modified'))
-            # nothing changed. skip
-            if last_modified <= last_scrape:
-                return
-        '''
-
         for venue in venues:
             venue_item = DefaultItemLoader(VenueItem())
             venue_item.add_value('venue', venue.get('Venue'))
