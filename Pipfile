@@ -7,6 +7,9 @@ name = "pypi"
 scrapy = "*"
 arrow = "*"
 tweepy = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
+jinja2 = "*"
 
 [dev-packages]
 
