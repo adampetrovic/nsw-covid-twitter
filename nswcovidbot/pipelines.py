@@ -1,8 +1,7 @@
-import re
+import logging
 from datetime import datetime
 from itertools import groupby
 from operator import attrgetter
-from typing import Tuple
 
 import tweepy
 import arrow
@@ -125,9 +124,11 @@ class TwitterPipeline:
             .all()
 
         if not suburbs or not venues:
+            logging.warning('no new venues found. quitting.')
             # nothing to post, exit
             return
 
+        logging.warning('{} new venues found. tweeting.'.format(len(venues)))
         aggr_body = AGGREGATE_TEMPLATE.render(suburbs=suburbs, venue_count=len(venues))
 
         # aggregate tweet
@@ -145,6 +146,7 @@ class TwitterPipeline:
                 status=venue_body,
                 in_reply_to_status_id=aggr_tweet.id,
             )
+            logging.warning('sending tweet. id={}'.format(status.id))
             for venue in group:
                 venue.tweet = Tweet(
                     tweet_id=status.id,
