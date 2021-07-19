@@ -12,4 +12,4 @@ CASE_TEMPLATE = Template(
 {% endfor %}
 
 Address: {{ venue.address}}, {{ venue.suburb }}
-{{- venue.alert }}""")
+{{ venue.alert -}}""")
