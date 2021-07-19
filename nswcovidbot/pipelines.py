@@ -140,11 +140,12 @@ class TwitterPipeline:
             try:
                 text = (venue_body[:277] + '...') if len(venue_body) > 280 else venue_body
                 status = self.twitter.update_status(
-                    status=venue_body,
+                    status=text,
                     in_reply_to_status_id=aggr_tweet.id,
                 )
             except tweepy.error.TweepError as e:
                 logging.error("Couldn't post tweet.", e)
+                continue
 
             logging.warning('sending tweet. id={}'.format(status.id))
             for venue in group:
