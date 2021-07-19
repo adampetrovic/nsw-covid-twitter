@@ -3,7 +3,7 @@ from jinja2 import Template
 AGGREGATE_TEMPLATE = Template(
 """⚠️ {{ venue_count }} New venues added in {{ suburbs | length }} suburbs.
 
-See thread for venue details 🧵👇""")
+See thread for venue details 🧵👇 #nswcovidvenue""")
 
 CASE_TEMPLATE = Template(
 """{{ venue.suburb | upper }}: {{ venue.name }}
