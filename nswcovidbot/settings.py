@@ -4,6 +4,10 @@ BOT_NAME = 'nswcovidbot'
 
 SPIDER_MODULES = ['nswcovidbot.spiders']
 
+LOG_FORMATTER = 'nswcovidbot.middleware.LogFormatter'
+LOG_LEVEL = 'INFO'
+STATS_CLASS = 'scrapy.statscollectors.DummyStatsCollector'
+
 USER_AGENT = 'nswcovidbot (+https://twitter.com/nswcovidbot)'
 
 DB_URI = os.environ.get('DB_URI')

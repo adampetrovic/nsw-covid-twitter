@@ -119,11 +119,11 @@ class TwitterPipeline:
             .all()
 
         if not suburbs or not venues:
-            logging.warning('no new venues found. quitting.')
+            logging.info('no new venues found. quitting.')
             # nothing to post, exit
             return
 
-        logging.warning('{} new venues found. tweeting.'.format(len(venues)))
+        logging.info('{} new venues found. tweeting.'.format(len(venues)))
 
         # does a group by venue name, so we can collate it into a single tweet
         venue_group = [list(g) for k, g in groupby(venues, attrgetter('name', 'suburb'))]
@@ -147,7 +147,7 @@ class TwitterPipeline:
                 logging.error("Couldn't post tweet.", e)
                 continue
 
-            logging.warning('sending tweet. id={}'.format(status.id))
+            logging.info('sending tweet. id={}'.format(status.id))
             for venue in group:
                 venue.tweet = Tweet(
                     tweet_id=status.id,
