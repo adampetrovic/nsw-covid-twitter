@@ -8,7 +8,7 @@ See thread for venue details 🧵👇""")
 CASE_TEMPLATE = Template(
 """{{ venue.suburb | upper }}: {{ venue.name }}
 {% for date in dates %}
-{{- date[0].strftime('%a %d/%b') }} {{ date[1] }}
+{{- date[0].strftime('%a %d/%b') }} {{ date[1] or '' }}
 {% endfor %}
 
 Address: {{ venue.address}}, {{ venue.suburb }}

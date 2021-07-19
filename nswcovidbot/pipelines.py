@@ -137,10 +137,15 @@ class TwitterPipeline:
             dates = [(x.date, x.time) for x in group]
             venue_body = CASE_TEMPLATE.render(venue=group[0], dates=dates).strip()
 
-            status = self.twitter.update_status(
-                status=venue_body,
-                in_reply_to_status_id=aggr_tweet.id,
-            )
+            try:
+                text = (venue_body[:277] + '...') if len(venue_body) > 280 else venue_body
+                status = self.twitter.update_status(
+                    status=venue_body,
+                    in_reply_to_status_id=aggr_tweet.id,
+                )
+            except tweepy.error.TweepError as e:
+                logging.error("Couldn't post tweet.", e)
+
             logging.warning('sending tweet. id={}'.format(status.id))
             for venue in group:
                 venue.tweet = Tweet(
