@@ -4,8 +4,11 @@ from scrapy.loader import ItemLoader
 from itemloaders.processors import TakeFirst, MapCompose
 
 
+def str_encode(value: str) -> str:
+    return value.encode('ascii', 'ignore').decode('utf-8')
+
 class DefaultItemLoader(ItemLoader):
-    default_input_processor = MapCompose(str.strip)
+    default_input_processor = MapCompose(str.strip, str_encode)
     default_output_processor = TakeFirst()
 
 
