@@ -4,8 +4,7 @@ BOT_NAME = 'nswcovidbot'
 
 SPIDER_MODULES = ['nswcovidbot.spiders']
 
-# Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'nswcovidbot (+http://twitter.com/nswcovidbot)'
+USER_AGENT = 'nswcovidbot (+https://twitter.com/nswcovidbot)'
 
 DB_URI = os.environ.get('DB_URI')
 
