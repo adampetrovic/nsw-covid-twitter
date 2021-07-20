@@ -132,6 +132,7 @@ class TwitterPipeline:
             venue_count=len(venue_group),
             now=arrow.get(tzinfo='Australia/Sydney').format('ddd D/MMM h:mma'),
         )
+
         # aggregate tweet
         aggr_tweet = self.twitter.update_status(
             status=aggr_body,
