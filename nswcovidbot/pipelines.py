@@ -127,7 +127,11 @@ class TwitterPipeline:
 
         # does a group by venue name, so we can collate it into a single tweet
         venue_group = [list(g) for k, g in groupby(venues, attrgetter('name', 'suburb'))]
-        aggr_body = AGGREGATE_TEMPLATE.render(suburbs=suburbs, venue_count=len(venue_group))
+        aggr_body = AGGREGATE_TEMPLATE.render(
+            suburbs=suburbs,
+            venue_count=len(venue_group),
+            now=arrow.get(tzinfo='Australia/Sydney').format('ddd D/MMM h:mma'),
+        )
         # aggregate tweet
         aggr_tweet = self.twitter.update_status(
             status=aggr_body,
