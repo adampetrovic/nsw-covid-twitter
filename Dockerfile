@@ -4,4 +4,4 @@ COPY . /tmp/myapp
 RUN cd /tmp/myapp && pipenv lock --keep-outdated --requirements > requirements.txt
 RUN pip install -r /tmp/myapp/requirements.txt
 WORKDIR /tmp/myapp
-CMD scrapy crawl covid && sleep 60
+CMD scrapy crawl covid && sleep 300
