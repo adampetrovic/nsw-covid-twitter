@@ -14,6 +14,16 @@ from nswcovidbot.models import Base, Venue, Tweet
 from nswcovidbot.templates import AGGREGATE_TEMPLATE, CASE_TEMPLATE
 
 
+
+class ValidationPipeline(object):
+
+    def process_item(self, item, spider):
+        required_keys = ['venue', 'suburb', 'date']
+        for key in required_keys:
+            if not item.get(key):
+                raise DropItem('Missing required key / value on item: {}'.format(key))
+
+
 class SQLPipeline(object):
 
     def __init__(self, db_uri):

@@ -20,6 +20,7 @@ TWITTER_AUTH = {
 }
 
 ITEM_PIPELINES = {
-    'nswcovidbot.pipelines.SQLPipeline': 0,
+    'nswcovidbot.pipelines.ValidationPipeline': 0,
+    'nswcovidbot.pipelines.SQLPipeline': 1,
     'nswcovidbot.pipelines.TwitterPipeline': 1,
 }
