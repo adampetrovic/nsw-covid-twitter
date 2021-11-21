@@ -13,7 +13,7 @@ from nswcovidbot.items import DefaultItemLoader, VenueItem
 class CovidSpider(scrapy.Spider):
     name = 'covid'
     allowed_domains = ['data.nsw.gov.au']
-    start_urls = ['https://data.nsw.gov.au/data/dataset/0a52e6c1-bc0b-48af-8b45-d791a6d8e289/resource/f3a28eed-8c2a-437b-8ac1-2dab3cf760f9/download/covid-case-locations-20210716-2359.json']
+    start_urls = ['https://data.nsw.gov.au/data/dataset/0a52e6c1-bc0b-48af-8b45-d791a6d8e289/resource/f3a28eed-8c2a-437b-8ac1-2dab3cf760f9/download/covid-case-locations-20211114-1135.json']
 
     def parse(self, response):
         venues = response.json().get('data').get('monitor')
